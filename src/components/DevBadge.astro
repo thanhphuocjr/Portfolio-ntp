@@ -1,0 +1,14 @@
+---
+import type { Content } from '../lib/content';
+interface Props {
+  c: Content;
+}
+const { missing } = Astro.props.c;
+---
+{import.meta.env.DEV && missing.length > 0 && (
+  <details class="devbadge">
+    <summary>Content checklist: {missing.length} items left</summary>
+    <ul>{missing.map((m) => <li>{m}</li>)}</ul>
+    <p>This list only appears while developing, never on the real site.</p>
+  </details>
+)}

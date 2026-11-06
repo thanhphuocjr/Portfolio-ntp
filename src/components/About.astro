@@ -1,0 +1,69 @@
+---
+import F from './F.astro';
+import Media from './Media.astro';
+import type { Content } from '../lib/content';
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+
+/** One span per word so the attention sweep can tint them individually. Keeps *keywords* marked. */
+const tokenize = (paragraph: string) => {
+  const words: { text: string; key: boolean; glued: boolean }[] = [];
+  let endsInSpace = true;
+  for (const part of paragraph.split(/(\*[^*]+\*)/).filter(Boolean)) {
+    const key = part.startsWith('*') && part.endsWith('*');
+    const clean = part.replace(/\*/g, '');
+    // Glued: no space in the source, like the full stop in "*AI*." It must not gain one here.
+    const glued = !endsInSpace && !/^\s/.test(clean);
+    clean
+      .split(/\s+/)
+      .filter(Boolean)
+      .forEach((text, i) => words.push({ text, key, glued: i === 0 && glued }));
+    endsInSpace = /\s$/.test(clean);
+  }
+  return words;
+};
+const paragraphs = c.about ? c.about.split('\n').map(tokenize) : [];
+---
+<section class="section about" id="about" data-shape="clusters">
+  <div class="wrap">
+    <p class="eyebrow mono"><span>{c.labels.about}</span> <span class="eyebrow__fn">attention(query="who are you?")</span></p>
+
+    <div class="about__grid">
+      <div class="about__text" data-attention>
+        {paragraphs.length ? (
+          paragraphs.map((words) => (
+            <p>
+              {words.map((w, i) => (
+                <>{i > 0 && !w.glued ? ' ' : ''}<span class:list={['w', { 'w--key': w.key }]}>{w.text}</span></>
+              ))}
+            </p>
+          ))
+        ) : (
+          <p><F hint="Write your introduction here. This text lights up word by word as visitors scroll, like an attention map, and words wrapped in asterisks stay highlighted." /></p>
+        )}
+      </div>
+
+      <Media
+        class="about__photo"
+        media={c.info.aboutImage}
+        alt={c.info.name}
+        ratio="4/5"
+        size="4:5 · at least 1000×1250"
+        sizes="(min-width: 900px) 30vw, 90vw"
+      />
+    </div>
+
+    {c.stats.length > 0 && (
+      <dl class="stats" style={`--count:${c.stats.length}`}>
+        {c.stats.map((s) => (
+          <div class="stat" data-reveal>
+            <dd class="stat__value" data-count><F v={s.value} hint="00+" /></dd>
+            <dt class="stat__label mono"><F v={s.label} hint="Metric label" /></dt>
+          </div>
+        ))}
+      </dl>
+    )}
+  </div>
+</section>

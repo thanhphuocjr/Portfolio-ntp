@@ -1,0 +1,85 @@
+---
+import { getImage } from 'astro:assets';
+import '@fontsource-variable/bricolage-grotesque/opsz.css';
+import '@fontsource-variable/jetbrains-mono/index.css';
+import '@fontsource/be-vietnam-pro/300.css';
+import '@fontsource/be-vietnam-pro/400.css';
+import '@fontsource/be-vietnam-pro/500.css';
+import '@fontsource/be-vietnam-pro/600.css';
+import 'lenis/dist/lenis.css';
+import '../styles/global.css';
+import type { Content } from '../lib/content';
+
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+const { info, socials } = c;
+
+const title = [info.name, info.title].filter(Boolean).join(' · ') || 'Portfolio';
+const description = info.intro || info.tagline.replace(/\*/g, '');
+
+const og = info.ogImage.image && info.website
+  ? new URL((await getImage({ src: info.ogImage.image, width: 1200, height: 630, format: 'jpg' })).src, info.website).href
+  : null;
+
+const particleImage = info.avatar.image
+  ? (await getImage({ src: info.avatar.image, width: 512, format: 'webp' })).src
+  : '';
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: info.name || undefined,
+  jobTitle: info.title || undefined,
+  description,
+  url: info.website || undefined,
+  email: info.email ? `mailto:${info.email}` : undefined,
+  sameAs: socials.length ? socials.map((s) => s.url) : undefined,
+};
+---
+<!doctype html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#040208" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {/* English only. Automatic translation would also break the word-by-word animations. */}
+    <meta name="google" content="notranslate" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {info.website && <link rel="canonical" href={info.website} />}
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {info.website && <meta property="og:url" content={info.website} />}
+    {og && <meta property="og:image" content={og} />}
+    <meta name="twitter:card" content={og ? 'summary_large_image' : 'summary'} />
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+    <script is:inline>
+      // Hide intro elements before first paint. The timeout keeps content readable if the animation code fails.
+      document.documentElement.classList.add('js');
+      window.__introFailsafe = setTimeout(function () {
+        document.documentElement.classList.remove('js');
+      }, 3500);
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <canvas
+      class="field"
+      data-field
+      data-avatar={particleImage}
+      data-monogram={info.initials}
+      aria-hidden="true"
+    ></canvas>
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="cursor" data-cursor aria-hidden="true"></div>
+    <slot />
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>

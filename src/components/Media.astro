@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import type { MediaRef } from '../lib/content';
+
+interface Props {
+  media: MediaRef;
+  alt: string;
+  ratio: string;
+  sizes: string;
+  size?: string;
+  class?: string;
+}
+const { media, alt, ratio, sizes, size = '', class: klass = '' } = Astro.props;
+const isSvg = media.image?.format === 'svg';
+// Always offer the file's own size, or an image between two steps is served at the smaller one.
+const own = media.image?.width ?? 0;
+const widths = [...new Set([480, 800, 1200, 1600].filter((w) => w <= own).concat(own <= 1600 ? [own] : []))];
+---
+<figure class:list={['media', klass]} style={`--ratio:${ratio}`}>
+  {media.image ? (
+    isSvg ? (
+      <img src={media.image.src} alt={alt} loading="lazy" decoding="async" data-denoise />
+    ) : (
+      <Image
+        src={media.image}
+        alt={alt}
+        widths={widths}
+        sizes={sizes}
+        format="webp"
+        quality={82}
+        loading="lazy"
+        decoding="async"
+        data-denoise
+      />
+    )
+  ) : (
+    <div class="media__empty" aria-hidden="true">
+      {import.meta.env.DEV && media.path && (
+        <span class="media__hint">
+          <b>{media.path}</b>
+          {size && <span>{size}</span>}
+        </span>
+      )}
+    </div>
+  )}
+</figure>

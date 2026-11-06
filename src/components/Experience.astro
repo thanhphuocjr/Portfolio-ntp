@@ -1,0 +1,98 @@
+---
+import F from './F.astro';
+import Media from './Media.astro';
+import { inline, type Content } from '../lib/content';
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+
+// A plausible, deterministic training curve: exponential decay with noise that also decays.
+const W = 320;
+const H = 220;
+const points: string[] = [];
+const STEPS = 90;
+for (let s = 0; s <= STEPS; s++) {
+  const t = s / STEPS;
+  const noise = (Math.sin(s * 1.7) + Math.sin(s * 0.63) * 0.7 + Math.sin(s * 3.1) * 0.5) * 0.045 * (1 - t * 0.75);
+  const loss = Math.exp(-3.4 * t) + noise + 0.04;
+  const y = H - 12 - Math.min(Math.max(loss, 0), 1.05) * (H - 28);
+  points.push(`${s === 0 ? 'M' : 'L'}${(t * W).toFixed(1)} ${y.toFixed(1)}`);
+}
+const curve = points.join(' ');
+const pad = (n: number) => String(n + 1).padStart(2, '0');
+---
+<section class="section xp" id="experience" data-shape="network">
+  <div class="wrap xp__grid">
+    <div class="xp__side">
+      <div class="xp__sticky">
+        <p class="eyebrow mono">model.fit(career)</p>
+        <h2 class="h2" data-split>{c.labels.experienceTitle}</h2>
+
+        <figure class="curve" aria-hidden="true">
+          <svg viewBox={`0 0 ${W} ${H}`} data-curve>
+            <defs>
+              <linearGradient id="curve-grad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="var(--lo)" />
+                <stop offset=".55" stop-color="var(--mid)" />
+                <stop offset="1" stop-color="var(--hi)" />
+              </linearGradient>
+            </defs>
+            <path class="curve__ghost" d={curve} />
+            <path class="curve__line" d={curve} data-curve-line stroke="url(#curve-grad)" />
+            <g data-curve-dots></g>
+            <circle class="curve__head" r="4" cx="0" cy="0" data-curve-head />
+          </svg>
+          <figcaption class="curve__axes mono"><span>loss</span><span>experience →</span></figcaption>
+          <p class="curve__readout mono" data-curve-readout></p>
+        </figure>
+      </div>
+    </div>
+
+    <ol class="xp__list" data-xp-list>
+      {c.experience.map((job, i) => (
+        <li class="job" data-job data-ckpt={`ckpt-${pad(i)}`} data-company={job.company}>
+          <div class="job__meta mono" data-reveal>
+            <span class="job__ckpt">ckpt-{pad(i)}</span>
+            <span><F v={job.period} hint="Period" /></span>
+            {job.location && <span>{job.location}</span>}
+          </div>
+          <div class="job__head" data-reveal>
+            {job.logo.image && (
+              <Media class="job__logo" media={job.logo} alt="" ratio="1/1" sizes="56px" />
+            )}
+            <h3 class="job__title">
+              <F v={job.role} hint="Role" />
+              <span class="job__at">
+                {job.companyUrl ? (
+                  <a href={job.companyUrl} target="_blank" rel="noopener">{job.company}<span aria-hidden="true"> ↗</span></a>
+                ) : (
+                  <F v={job.company} hint="Company" />
+                )}
+              </span>
+            </h3>
+          </div>
+          {(job.summary || c.isDev) && (
+            <p class="job__summary" data-reveal>
+              <F html v={inline(job.summary)} hint="A short summary: what you owned and the problem you solved with AI." />
+            </p>
+          )}
+          {job.wins.length > 0 ? (
+            <ul class="job__wins" data-reveal>
+              {job.wins.map((win) => <li set:html={inline(win)} />)}
+            </ul>
+          ) : c.isDev ? (
+            <ul class="job__wins" data-reveal>
+              <li><span class="slot">A win with a measurable result</span></li>
+            </ul>
+          ) : null}
+          {job.tech.length > 0 ? (
+            <ul class="tags" data-reveal>{job.tech.map((t) => <li>{t}</li>)}</ul>
+          ) : c.isDev ? (
+            <ul class="tags" data-reveal><li><span class="slot">Technology</span></li></ul>
+          ) : null}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

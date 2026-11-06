@@ -1,0 +1,10 @@
+---
+/** Prints a field from noi-dung.txt. Empty fields show a hint in dev and nothing on the real site. */
+interface Props {
+  v?: string;
+  hint: string;
+  html?: boolean;
+}
+const { v, hint, html = false } = Astro.props;
+---
+{v ? (html ? <Fragment set:html={v} /> : v) : import.meta.env.DEV ? <span class="slot">{hint}</span> : null}

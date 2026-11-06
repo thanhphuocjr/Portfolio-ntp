@@ -1,0 +1,89 @@
+---
+import F from './F.astro';
+import { inline, type Content } from '../lib/content';
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+const { info, contact, socials, labels } = c;
+const year = new Date().getFullYear();
+
+const key = contact.formKey;
+// Web3Forms emails each submission to the address the key was created with.
+const action = key ? 'https://api.web3forms.com/submit' : info.email ? `mailto:${info.email}` : undefined;
+---
+<section class="section contact" id="contact" data-shape="monogram">
+  <div class="wrap">
+    <p class="eyebrow mono">await reply()</p>
+    <h2 class="contact__title" data-split><F html v={inline(contact.title)} hint="Your invitation to get in touch" /></h2>
+    {contact.text && <p class="contact__text" data-reveal>{contact.text}</p>}
+
+    {(action || c.isDev) && (
+      <form
+        class="prompt"
+        data-reveal
+        data-prompt
+        data-prompts={JSON.stringify(contact.prompts)}
+        data-email={info.email}
+        data-key={key}
+        data-sent={labels.formSent}
+        data-failed={labels.formFailed}
+        action={action}
+        method="post"
+        enctype={key ? undefined : 'text/plain'}
+      >
+        {key && (
+          <>
+            <input type="hidden" name="access_key" value={key} />
+            <input type="hidden" name="subject" value={`New message from your portfolio${info.name ? `, ${info.name}` : ''}`} />
+            <input type="hidden" name="from_name" value="Portfolio contact form" />
+            <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none" />
+          </>
+        )}
+
+        <div class="prompt__fields">
+          <label class="prompt__field">
+            <span class="prompt__label mono">{labels.formName}</span>
+            <input type="text" name="name" required maxlength="120" autocomplete="name" />
+          </label>
+          <label class="prompt__field">
+            <span class="prompt__label mono">{labels.formEmail}</span>
+            <input type="email" name="email" required maxlength="200" autocomplete="email" />
+          </label>
+        </div>
+
+        <label class="prompt__field">
+          <span class="prompt__label mono">{labels.formMessage}</span>
+          <textarea name="message" required rows="3" maxlength="5000" data-prompt-input placeholder={contact.prompts[0] ?? ''}></textarea>
+        </label>
+
+        <div class="prompt__foot">
+          <p class="prompt__status mono" role="status" data-prompt-status></p>
+          <button class="btn btn--primary" type="submit" data-magnetic>
+            {labels.send}
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </form>
+    )}
+
+    <div class="contact__links">
+      {info.email ? (
+        <a class="contact__email" href={`mailto:${info.email}`}>{info.email}</a>
+      ) : c.isDev ? (
+        <span class="contact__email"><span class="slot">you@example.com</span></span>
+      ) : null}
+      {info.phone && <a class="link" href={`tel:${info.phone.replace(/\s/g, '')}`}>{info.phone}</a>}
+      <ul class="socials">
+        {socials.map((s) => (
+          <li><a class="link" href={s.url} target="_blank" rel="noopener">{s.label} <span aria-hidden="true">↗</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <footer class="footer wrap mono">
+    <span>© {year} {info.name}</span>
+    <span>Astro · GSAP · WebGL2</span>
+  </footer>
+</section>

@@ -1,0 +1,77 @@
+---
+import F from './F.astro';
+import Media from './Media.astro';
+import type { Content } from '../lib/content';
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+const pad = (n: number) => String(n + 1).padStart(2, '0');
+---
+<section class="section work" id="work" data-shape="landscape">
+  <div class="wrap">
+    <p class="eyebrow mono">inference(real_world=True)</p>
+    <h2 class="h2" data-split>{c.labels.workTitle}</h2>
+
+    <div class="work__list" data-cards>
+      {c.projects.map((p, i) => (
+        <article class="card" data-card style={`--i:${i}`}>
+          <div class="card__inner" data-card-inner>
+            <span class="card__shade" data-card-shade aria-hidden="true"></span>
+            <span class="card__glow" aria-hidden="true"></span>
+            <div class="card__body">
+              <p class="card__meta mono">
+                <span>{pad(i)}</span>
+                <span><F v={p.field} hint="Field" /></span>
+                <span><F v={p.year} hint="Year" /></span>
+              </p>
+              <h3 class="card__title"><F v={p.name} hint="Project name" /></h3>
+              <p class="card__summary">
+                <F v={p.summary} hint="The real-world problem it solves, how you used AI, and what changed." />
+              </p>
+
+              {(p.impact || p.role || c.isDev) && (
+                <dl class="card__facts">
+                  {(p.impact || c.isDev) && (
+                    <div class="card__impact">
+                      <dt class="mono">{c.labels.impact}</dt>
+                      <dd><F v={p.impact} hint="−40% time" /></dd>
+                    </div>
+                  )}
+                  {(p.role || c.isDev) && (
+                    <div>
+                      <dt class="mono">{c.labels.role}</dt>
+                      <dd><F v={p.role} hint="Your role" /></dd>
+                    </div>
+                  )}
+                </dl>
+              )}
+
+              {p.tech.length > 0 ? (
+                <ul class="tags">{p.tech.map((t) => <li>{t}</li>)}</ul>
+              ) : c.isDev ? (
+                <ul class="tags"><li><span class="slot">Technology</span></li></ul>
+              ) : null}
+
+              {(p.demo || p.code) && (
+                <div class="card__links">
+                  {p.demo && <a class="link" href={p.demo} target="_blank" rel="noopener">{c.labels.demo} <span aria-hidden="true">↗</span></a>}
+                  {p.code && <a class="link" href={p.code} target="_blank" rel="noopener">{c.labels.code} <span aria-hidden="true">↗</span></a>}
+                </div>
+              )}
+            </div>
+
+            <Media
+              class="card__image"
+              media={p.image}
+              alt={p.name}
+              ratio={p.image.image ? `${p.image.image.width}/${p.image.image.height}` : '16/10'}
+              size="16:10 · at least 1600×1000"
+              sizes="(min-width: 900px) 52vw, 90vw"
+            />
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

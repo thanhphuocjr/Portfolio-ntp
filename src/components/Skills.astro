@@ -1,0 +1,48 @@
+---
+import F from './F.astro';
+import type { Content } from '../lib/content';
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+const all = c.skills.flatMap((s) => s.items);
+---
+<section class="section stack" id="stack">
+  <div class="wrap">
+    <p class="eyebrow mono">model.summary()</p>
+    <h2 class="h2" data-split>{c.labels.stackTitle}</h2>
+
+    <div class="net" data-net>
+      <svg class="net__edges" aria-hidden="true" data-net-edges></svg>
+      <div class="net__layers" style={`--layers:${Math.max(c.skills.length, 1)}`}>
+        {c.skills.map((layer, i) => (
+          <div class="net__layer" data-net-layer>
+            <h3 class="net__name">
+              <span class="mono net__index" aria-hidden="true">layer_{i}</span>
+              <F v={layer.group} hint={`Skill group ${i + 1}`} />
+            </h3>
+            <ul class="net__nodes">
+              {layer.items.length > 0
+                ? layer.items.map((item) => <li class="net__node" data-net-node tabindex="0">{item}</li>)
+                : c.isDev
+                  ? [1, 2, 3, 4].map((n) => (
+                      <li class="net__node" data-net-node><span class="slot">Skill {n}</span></li>
+                    ))
+                  : null}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {all.length > 2 && (
+    <div class="marquee" aria-hidden="true">
+      {[0, 1].map(() => (
+        <div class="marquee__row">
+          {all.map((item) => <span>{item}</span>)}
+        </div>
+      ))}
+    </div>
+  )}
+</section>

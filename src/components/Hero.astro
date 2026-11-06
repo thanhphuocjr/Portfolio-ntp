@@ -1,0 +1,49 @@
+---
+import F from './F.astro';
+import { inline, type Content } from '../lib/content';
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+const { info, labels } = Astro.props.c;
+---
+<section class="hero" id="top">
+  <div class="wrap hero__inner">
+    <p class="eyebrow hero__eyebrow" data-intro>
+      <F v={info.title} hint="Your job title" />
+      {info.location && <span class="hero__place">{info.location}</span>}
+    </p>
+
+    <h1 class="hero__name" data-hero-name><F v={info.name} hint="Your Name" /></h1>
+
+    <p class="hero__tagline" data-stream>
+      <F html v={inline(info.tagline)} hint="Your one-line statement" />
+    </p>
+
+    {(info.intro || c.isDev) && (
+      <p class="hero__intro" data-intro>
+        <F v={info.intro} hint="One or two sentences on what you do and who you do it for." />
+      </p>
+    )}
+
+    <div class="hero__actions" data-intro>
+      <a class="btn btn--primary" href={c.show.work ? '#work' : '#contact'} data-magnetic>
+        {labels.viewWork}
+        <span aria-hidden="true">↓</span>
+      </a>
+      {info.cv ? (
+        <a class="btn" href={info.cv} download data-magnetic>
+          {labels.downloadCv}
+          <span aria-hidden="true">↗</span>
+        </a>
+      ) : c.isDev ? (
+        <span class="btn btn--ghost"><span class="slot">media/cv.pdf</span></span>
+      ) : null}
+    </div>
+  </div>
+
+  <p class="hero__sample mono" aria-hidden="true" data-intro>
+    <span>diffusion.sample(steps=1000)</span>
+    <span class="hero__step" data-sample-step>t=1000</span>
+  </p>
+</section>

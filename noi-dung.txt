@@ -1,0 +1,277 @@
+# ══════════════════════════════════════════════════════════════════════════
+#  NỘI DUNG WEBSITE PORTFOLIO
+#  Đây là file duy nhất bạn cần sửa. Lưu lại là website tự cập nhật.
+# ══════════════════════════════════════════════════════════════════════════
+#
+#  CÁCH ĐIỀN
+#    • Viết ngay sau dấu hai chấm. Đoạn dài thì cứ xuống dòng viết tiếp.
+#    • Dòng bắt đầu bằng # chỉ là ghi chú, website không hiển thị.
+#    • Ô để trống: khi chạy thử sẽ hiện chữ gợi ý có gạch chân đứt nét,
+#      khi đưa lên mạng sẽ tự ẩn đi. Bỏ trống ô nào cũng không gây lỗi.
+#    • Khối [[...]] lặp lại được: cần thêm thì copy nguyên khối,
+#      không dùng thì xoá khối đó đi. Website tự co giãn theo số khối.
+#    • Bọc từ quan trọng trong *dấu sao* để nó được tô sáng.
+#    • Danh sách: mỗi dòng bắt đầu bằng "- ".
+#    • Công nghệ, kỹ năng: ngăn cách bằng dấu |
+#    • Giao diện website toàn tiếng Anh, nên hãy viết nội dung bằng tiếng Anh.
+#
+#  ẢNH VÀ FILE: bỏ vào thư mục media/ đúng tên dưới đây
+#  (website tự nén và đổi sang WebP, nên ảnh gốc to cũng không sao)
+#
+#    media/avatar.png               Chân dung vuông, từ 800×800 px. Website dựng
+#                                   ảnh này thành đám hạt ở đầu trang. Đẹp nhất là
+#                                   ảnh đã tách nền trong suốt hoặc nền tối, rõ mặt.
+#    media/about.jpg                Ảnh mục About, dọc 4:5, từ 1000×1250 px.
+#    media/projects/project-1.jpg   Ảnh dự án, ngang 16:10, từ 1600×1000 px.
+#                                   Tương tự project-2.jpg, project-3.jpg...
+#    media/logos/company-1.png      Logo công ty, vuông, từ 128×128 px (không bắt buộc).
+#    media/og-cover.jpg             Ảnh hiện khi chia sẻ link, 1200×630 px.
+#    media/cv.pdf                   File CV để nhà tuyển dụng tải về.
+#
+#  Muốn dùng tên file khác thì đổi tên tương ứng ở các ô bên dưới.
+# ══════════════════════════════════════════════════════════════════════════
+
+
+# ─── THÔNG TIN CÁ NHÂN ────────────────────────────────────────────────────
+[thong-tin]
+
+# Họ tên đầy đủ, là dòng chữ lớn nhất ở đầu trang.
+ho_ten: Thanh Phuoc
+
+# 2–4 ký tự làm logo và tạo hình hạt ở cuối trang. Bỏ trống thì lấy chữ cái đầu của họ tên.
+ten_viet_tat: ntp
+
+# Chức danh. VD: AI Engineer, AI Product Engineer...
+chuc_danh: AI Engineer
+
+# Câu tuyên ngôn dưới tên. Mình viết sẵn theo chuyên môn bạn mô tả, hãy sửa lại theo giọng của bạn.
+khau_hieu: It's only hard, it's not impossible.
+
+# 1–2 câu nói rõ bạn làm gì và cho ai.
+mo_ta_ngan: Building AI applications for everyday life at Fans High-Tech.
+
+# Trạng thái tìm việc ở góc trên. VD: Open to work, Available from 01/2027. Bỏ trống thì ẩn.
+trang_thai: Working
+
+# Thành phố, quốc gia.
+dia_diem: Hanoi, Vietnam
+
+email: nguyenthanhphuocjr@gmail.com
+so_dien_thoai: 0869033xxx
+
+# Địa chỉ website sau khi đưa lên mạng, có https://. Cần cho ảnh xem trước khi chia sẻ link.
+website:
+
+# Tên file trong thư mục media/. Thường không cần đổi.
+anh_dai_dien: avatar.png
+anh_gioi_thieu: about.jpg
+anh_chia_se: og-cover.jpg
+file_cv: cv.pdf
+
+
+# ─── MẠNG XÃ HỘI ──────────────────────────────────────────────────────────
+# Dán link đầy đủ, ô trống sẽ tự ẩn. Có thể thêm dòng mới theo mẫu: ten_trang: https://...
+[mang-xa-hoi]
+github: https://github.com/thanhphuocjr
+facebook: https://www.facebook.com/thanhphuocjr/
+instagram: https://www.instagram.com/_ntp_jr/
+youtube: https://www.youtube.com/@thanhphuocjr
+
+
+
+# ─── GIỚI THIỆU ───────────────────────────────────────────────────────────
+# Đoạn này hiển thị dạng "bản đồ attention": chữ sáng dần theo lúc cuộn trang.
+# Từ bọc trong *dấu sao* sẽ giữ màu sáng. Nên viết 60–90 từ và chọn 3–5 từ khoá.
+[gioi-thieu]
+noi_dung: Hi there, and thanks for stopping by! I'm Phuoc, a final-year student at VNU University of Engineering and Technology who lives and breathes *programming* and *AI*. I love collaborating on projects that bridge the gap between *AI and everyday life*.
+My work spans sports, crypto, customer care, healthcare, entertainment, smart home devices, and graduation and academic projects.
+Have an idea? Drop your info below and let's *build it together*.
+
+
+# ─── SỐ LIỆU NỔI BẬT ──────────────────────────────────────────────────────
+# Hiện ngay dưới phần giới thiệu, số tự chạy lên khi cuộn tới. Nên dùng đúng 4 khối.
+# gia_tri chấp nhận dạng 5+, 40%, 1.2M. VD nhãn: Years in AI, Products shipped, Users served.
+[[so-lieu]]
+gia_tri: 3+
+nhan: Years building software
+
+[[so-lieu]]
+gia_tri: 7
+nhan: Domains explored
+
+[[so-lieu]]
+gia_tri: 3
+nhan: Featured AI projects
+
+[[so-lieu]]
+gia_tri: 6
+nhan: Programming languages
+
+
+# ─── KINH NGHIỆM ──────────────────────────────────────────────────────────
+# Xếp công việc mới nhất lên đầu. Mẹo: thành tích có con số luôn thuyết phục hơn
+# mô tả công việc, VD "Giảm 40% thời gian xử lý hồ sơ cho 200 nhân viên".
+[[kinh-nghiem]]
+thoi_gian: 2026-Present
+vi_tri: Fresher AI Engineer
+cong_ty: Fans High-Tech
+link_cong_ty:
+dia_diem: Huynh Thuc Khang, Hanoi, Vietnam
+logo: logos/fans.png
+mo_ta: Building and optimizing AI systems, from the model to the web application and its deployment.
+thanh_tich:
+- Optimize AI models
+- Develop web applications
+- Handle DevOps
+cong_nghe: Claude | Python | Java | JavaScript | C | C++
+
+[[kinh-nghiem]]
+thoi_gian: 2023-2025
+vi_tri: Freelancer
+cong_ty: Self-employed
+link_cong_ty:
+dia_diem:
+logo: logos/freelance.png
+mo_ta: Delivered programming and AI projects for clients across multiple domains.
+thanh_tich:
+cong_nghe:
+
+
+# ─── DỰ ÁN ────────────────────────────────────────────────────────────────
+# Chọn 3–5 dự án tốt nhất là đủ.
+# linh_vuc: VD Computer Vision · Healthcare.   nam: VD 2025.
+# tac_dong: kết quả đo được, hiện nổi bật trên thẻ dự án. VD −40% processing time.
+[[du-an]]
+ten: Smart Contract Vulnerability Detection & Repair System
+linh_vuc: AI Application · Blockchain
+nam: 2026
+mo_ta: A multi-agent system that detects, assesses, repairs and reports vulnerabilities in blockchain smart contract code.
+tac_dong: Helps prevent vulnerable code from being exploited
+vai_tro: Owner
+cong_nghe: Solidity | Multi-Agent Systems
+anh: projects/blockchain.png
+link_demo:
+link_code:
+
+[[du-an]]
+ten: Do Nail Healthcare
+linh_vuc: AI Application · Customer Care
+nam: 2026
+mo_ta: An AI assistant that answers customer questions on the website and over phone calls, using LLMs and voice skills.
+tac_dong: Reduces the manual workload of customer support staff
+vai_tro: AI Developer
+cong_nghe: LLM | Voice AI
+anh: projects/do_nails.png
+link_demo:
+link_code:
+
+[[du-an]]
+ten: Zofi Robot
+linh_vuc: AI Education
+nam: 2026
+mo_ta: An AI companion robot for children aged 3-6.
+tac_dong: Brings AI into early childhood development
+vai_tro: Developer & Tester
+cong_nghe: Python
+anh: projects/zofi.png
+link_demo:
+link_code:
+
+
+# ─── KỸ NĂNG ──────────────────────────────────────────────────────────────
+# Mỗi nhóm là một "lớp" trong sơ đồ mạng nơ-ron. Đẹp nhất: 3–4 nhóm, mỗi nhóm 3–6 mục.
+# VD: nhom: LLM & Agents    cac_muc: RAG | LangGraph | Prompt Engineering | Evaluation
+[[ky-nang]]
+nhom: Languages
+cac_muc: Python | Java | JavaScript | C | C++ | Solidity
+
+[[ky-nang]]
+nhom: AI & LLMs
+cac_muc: Claude | LLM Applications | Multi-Agent Systems | Voice AI | Model Optimization
+
+[[ky-nang]]
+nhom: Engineering
+cac_muc: Web Development | DevOps | Testing
+
+[[ky-nang]]
+nhom: Applied AI
+cac_muc: Smart Contract Security | Customer Care Automation | AI for Education
+
+
+# ─── HỌC VẤN ──────────────────────────────────────────────────────────────
+[[hoc-van]]
+thoi_gian: 2023-2027
+ten: Bachelor's Degree
+noi_cap: VNU University of Engineering and Technology
+ghi_chu: Final-year student
+link:
+
+[[hoc-van]]
+thoi_gian: 2020-2023
+ten: High School Diploma
+noi_cap: Hung Yen High School for the Gifted
+ghi_chu:
+link:
+
+
+# ─── GIẢI THƯỞNG, CHỨNG CHỈ, BÀI BÁO ──────────────────────────────────────
+[[thanh-tuu]]
+thoi_gian:
+ten:
+noi_cap:
+ghi_chu:
+link:
+
+[[thanh-tuu]]
+thoi_gian:
+ten:
+noi_cap:
+ghi_chu:
+link:
+
+
+# ─── LIÊN HỆ ──────────────────────────────────────────────────────────────
+[lien-he]
+tieu_de: Let's build something people *actually use*.
+mo_ta: Have an AI idea or a role in mind? Send me a message and I'll get back to you soon.
+
+# Khoá để lời nhắn trong form được gửi thẳng về email của bạn (qua dịch vụ Web3Forms):
+#   1. Vào https://web3forms.com/#start và nhập email muốn nhận lời nhắn.
+#   2. Mở email họ gửi, copy Access Key rồi dán vào ô dưới đây.
+# Khoá này được phép công khai, không phải mật khẩu.
+# Để trống thì form vẫn hoạt động nhưng sẽ mở ứng dụng mail của người xem.
+khoa_form:
+
+# Các gợi ý chạy lần lượt trong ô nhắn tin.
+goi_y:
+- We need an AI engineer for our team…
+- We have a process that should be automated with AI…
+- I'd like to talk about your work on…
+
+
+# ─── CHỮ TRÊN GIAO DIỆN ───────────────────────────────────────────────────
+# Mọi chữ trên menu, tiêu đề, nút bấm và form. Sửa ở đây nếu muốn đổi câu chữ.
+[nhan]
+menu_gioi_thieu: About
+menu_kinh_nghiem: Experience
+menu_du_an: Work
+menu_ky_nang: Stack
+menu_hoc_van: Education
+menu_lien_he: Contact
+tieu_de_kinh_nghiem: Experience
+tieu_de_du_an: Selected work
+tieu_de_ky_nang: What I build with
+tieu_de_hoc_van: Education
+tieu_de_thanh_tuu: Recognition
+nut_xem_du_an: View my work
+nut_tai_cv: Download CV
+nut_gui: Send
+form_ten: Your name
+form_email: Your email
+form_loi_nhan: Your message
+form_da_gui: Message sent. I'll get back to you soon.
+form_that_bai: Couldn't send your message. Please email me directly:
+tac_dong: Impact
+vai_tro: Role
+xem_demo: Live demo
+xem_code: Source code

@@ -1,0 +1,53 @@
+---
+import type { Content } from '../lib/content';
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+const pad = (n: number) => String(n + 1).padStart(2, '0');
+---
+<div class="progress" data-progress aria-hidden="true"></div>
+
+<header class="nav" data-nav>
+  <a class="nav__logo" href="#top" aria-label="Back to top">
+    <span class="nav__mark" aria-hidden="true"></span>
+    <span>{c.info.initials || (c.isDev ? 'ABC' : '')}</span>
+  </a>
+
+  <nav class="nav__links" aria-label="Sections">
+    {c.nav.map((item, i) => (
+      <a href={`#${item.id}`} data-nav-link={item.id}>
+        <span class="nav__index" aria-hidden="true">{pad(i)}</span>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+
+  <div class="nav__end">
+    {c.info.status && (
+      <span class="status">
+        <i aria-hidden="true"></i>
+        {c.info.status}
+      </span>
+    )}
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      Menu
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu" data-menu hidden>
+  <nav aria-label="Sections">
+    {c.nav.map((item, i) => (
+      <a href={`#${item.id}`} data-menu-link>
+        <span class="nav__index" aria-hidden="true">{pad(i)}</span>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</div>
+
+<aside class="rail" aria-hidden="true">
+  <span class="rail__track"><i data-rail-fill></i></span>
+  <span class="rail__label" data-rail-label>loss 2.303</span>
+</aside>
